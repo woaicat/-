@@ -1,0 +1,28 @@
+.DS_Store
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Project-generated artifacts
+llm_evaluation_agent（基础版）/.venv/
+llm_evaluation_agent（基础版）/.pytest_cache/
+llm_evaluation_agent（基础版）/frontend/node_modules/
+llm_evaluation_agent（基础版）/outputs/
+llm_evaluation_agent（基础版）/uploads/
+llm_evaluation_agent（基础版）/storage/chroma/
+llm_evaluation_agent（基础版）/storage/checkpoints/
