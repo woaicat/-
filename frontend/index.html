@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>评测工作台</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/styles.css?v={{ASSET_VERSION}}">
+  <script src="/assets/vendor/markdown-it.umd.min.js?v={{ASSET_VERSION}}"></script>
+  <script src="/assets/vendor/purify.min.js?v={{ASSET_VERSION}}"></script>
+  <script src="/assets/app.js?v={{ASSET_VERSION}}" type="module"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">✦</span><span>评测工作台</span></div>
+      <button class="new-chat" id="newChat" type="button"><span class="plus">＋</span>新建对话</button>
+      <div class="side-label">最近的对话</div>
+      <nav class="history" id="history" aria-label="历史对话"></nav>
+      <div class="sidebar-bottom"><span class="avatar-self">我</span><div class="account">个人工作区<small>每个对话独立保存</small></div></div>
+    </aside>
+    <div class="workspace">
+      <section class="main-pane">
+        <header class="topbar">
+          <div class="topbar-left"><span class="subtle" id="conversationContext">对话</span><h1 id="conversationTitle">新对话</h1></div>
+          <div class="topbar-actions"><span class="live" id="topStatus" hidden>就绪</span><button class="artifact-toggle" id="toggleDrawer" type="button" aria-label="查看产物文件" aria-controls="drawer" aria-expanded="false">▣ <span>文件</span> <span id="artifactCount">0</span></button></div>
+        </header>
+        <div class="chat-scroll" id="chatScroll"><div class="thread" id="thread"></div></div>
+        <div class="composer-wrap" id="composerWrap">
+          <div class="status-sync" id="statusSync" role="status" hidden><span id="statusSyncMessage"></span><button id="retryStatusSync" type="button">重试同步</button></div>
+          <div class="context-notice" id="contextNotice" role="status" aria-live="polite" hidden></div>
+          <div class="composer">
+            <div class="selected-attachments" id="selectedAttachments"></div>
+            <textarea id="messageInput" rows="2" placeholder="描述需求、讨论方案，或要求智能体修改产物…" aria-label="发送给评测智能体的消息" disabled></textarea>
+            <div class="composer-bottom"><div><button class="attach-button" id="attachButton" type="button" title="上传 Markdown 或 Word 文件" aria-label="上传文件" disabled><span aria-hidden="true">＋</span> 上传文档</button><input id="fileInput" type="file" accept=".md,.docx" multiple hidden></div><div class="composer-actions">
+              <div class="context-meter" id="contextMeter">
+                <button class="context-button" id="contextButton" type="button" aria-label="上下文占用，尚未统计" aria-describedby="contextTooltip" aria-expanded="false">
+                  <svg class="context-ring" viewBox="0 0 24 24" aria-hidden="true"><circle class="context-track" cx="12" cy="12" r="9"></circle><circle class="context-fill" id="contextFill" cx="12" cy="12" r="9" pathLength="100"></circle></svg>
+                  <span id="contextPercent">—</span>
+                </button>
+                <div class="context-tooltip" id="contextTooltip" role="tooltip" hidden>
+                  <strong id="contextHeadline">上下文窗口 · 尚未统计</strong>
+                  <span class="context-tokens" id="contextTokens"></span>
+                  <span class="context-footnote">近似估算，非供应商精确用量。包含系统提示、工具定义和模型消息；不含未发送草稿及未读取附件。</span>
+                </div>
+              </div>
+              <button class="send-button" id="sendButton" type="button" title="发送消息" aria-label="发送消息" disabled>↑</button>
+            </div></div>
+          </div>
+          <div class="composer-hints"><span>Enter 发送 · Shift + Enter 换行</span><span>先确认大纲，再生成完整评测包</span></div>
+        </div>
+      </section>
+      <aside class="drawer" id="drawer" hidden>
+        <div class="drawer-header"><div><strong>文件</strong><small>按产品查看 · 版本独立记录</small></div><button class="close-button" id="closeDrawer" type="button" aria-label="关闭产物抽屉">×</button></div>
+        <div class="drawer-scroll"><div id="folders"></div></div>
+        <div class="drawer-foot">点击文件打开大预览。<br>如需修改内容，请在对话中告诉智能体。</div>
+      </aside>
+    </div>
+  </div>
+  <dialog class="preview-dialog" id="previewDialog" aria-labelledby="previewTitle">
+    <header class="preview-top">
+      <div class="preview-heading"><h2 id="previewTitle">文件预览</h2><span id="previewRevision"></span></div>
+      <button class="close-button" id="closePreview" type="button" aria-label="关闭文件预览" autofocus>×</button>
+    </header>
+    <div class="preview-content" id="preview" aria-live="polite"></div>
+    <footer class="preview-foot"><span>只读预览 · 如需修改，请在聊天中告诉智能体</span><a id="previewDownload">下载文件 →</a></footer>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
